@@ -4,22 +4,18 @@ from pathlib import Path
 # from main import loss_func
 import numpy as np
 from dataset import testDataLoader,Dataset,test_data, test_labels,testSignData,testDataLoader
-from model import Net
+from model import resnet50
 import matplotlib.pyplot as plt
-import pandas as pd
-import os
 
-from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error
 from math import sqrt
 
 from sklearn.metrics import r2_score
 from sklearn.metrics import f1_score
 
-model_dir = '/home/mengying/公共的/04_PhenocamCNNR/01_Allsites_Images14453/AlexNet_Allsites/01_ResNet50/saved_models/checkpoint_370/Resnet50_All_ROI_itr_370_train_0.008778_tar_0.007821.pth'
-# model_dir = '/home/mengying/公共的/04_PhenocamCNNR/02_Allsites_ROI14453/AlexNet_Allsites_ROI/saved_models/checkpoint_480/AlexNet_Dukehw_ROI_480_train_0.007667_tar_0.006534.pth'
-test_dir = "./saved_test_epoch380/"
-net = Net()
+model_dir = '/home/mengying/公共的/04_PhenocamCNNR/02_Allsites_ROI14453/ResNet_Allsites45_ROI/saved_models/checkpoint_250/Resnet50_All_ROI_itr_250_train_0.000762_tar_0.000600.pth'
+
+net = resnet50()
 loss_func = torch.nn.MSELoss()
 
 # def load_checkpoint(checkpoint, model, optimizer=None, map_location=None):
@@ -61,35 +57,40 @@ def test(net, testDataLoader,loss_func):
     print('\nAccuracy of the network on test: %d %%' % (100 * correct / total))
 
     targets = targets.cpu()
-    print(targets, pred)
+    print(targets,pred)
 
-    plt.subplots(figsize=(5, 5))
+    plt.subplots(figsize=(5,5))
+    # rms = mean_squared_error(targets, pred)
+    # rmse = sqrt(mean_squared_error(targets, pred))
+    r2 = r2_score(targets, pred)
+    # rms = round(rms, 3)
+    # rmse = round(rmse, 3)
+    r2 = round(r2, 3)
 
-    plt.scatter(targets, pred, 25)
+    plt.scatter(targets,pred,85)
     rmse = sqrt(mean_squared_error(targets, pred))
     r2 = r2_score(targets, pred)
-    f1 = f1_score(targets, pred, average="micro")
-    MAE = mean_absolute_error(targets, pred)
+    f1 = f1_score(targets, pred,average="micro")
     # rms = round(rms, 3)
     rmse = round(rmse, 3)
     r2 = round(r2, 3)
     f1 = round(f1, 3)
-    mAE = round(MAE, 3)
-    print('R^2: {:.3f} \tRMSE: {:.3f} \tMAE: {:.3f}'.format(r2, rmse, MAE))
+    print('R^2: {:.3f} \tRMSE: {:.3f} \tAccuracy: {:.3f}\tF1: {:.3f}'.format(r2, rmse, accuracy, f1))
 
-    dt = {"targets": targets, "Prediction": pred}
-    data = pd.DataFrame(data=dt)
+    plt.title("Test Accuracy")
+    plt.xlabel("targets")
+    plt.ylabel("prediction")
 
-    tests = test_dir
-    isExists = os.path.exists(tests)
-    # 判断结果
-    if not isExists:
-        os.makedirs(tests)
-    # name = 'Epoch: {} \tR^2: {:.3f} \tRMSE: {:.3f} \tMAE: {:.3f}'.format(epoch, r2, rmse, MAE) + ".csv"
-    name = 'R^2: {:.3f} \tRMSE: {:.3f} \tMAE: {:.3f}'.format(r2, rmse, MAE) + ".csv"
+    plt.text(10, 280, "R^2 = ", c="blue")
+    plt.text(10, 270, "RMSE= ", c="blue")
+    plt.text(10, 260, "F1 = ", c="blue")
+    # plt.text(40, 220, "Accuracy=", c="blue",fontsize=6)
+    plt.annotate(r2, xy=(50, 280), c="blue")
+    plt.annotate(rmse, xy=(55, 270), c="blue")
+    plt.annotate(f1, xy=(45, 260), c="blue")
 
-    data.to_csv(test_dir + name)
-
+    plt.savefig("test.png")
+    plt.show()
 
 test(net, testDataLoader,loss_func)
 

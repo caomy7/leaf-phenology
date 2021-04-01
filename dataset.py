@@ -14,7 +14,7 @@ files = os.listdir(path)
 # numTrainData=1000
 numTrainData=10000
 
-batch_size = 128
+batch_size =256
 # batch_size =31
 age =[]
 data = []
