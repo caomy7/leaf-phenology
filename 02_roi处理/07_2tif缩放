@@ -1,0 +1,56 @@
+# coding: utf-8
+from PIL import Image
+from libtiff import TIFF
+import os
+import os.path
+
+import cv2
+import random
+import numpy as np
+from scipy import misc
+from PIL import Image
+from libtiff import TIFF
+
+# 指明被遍历的文件夹
+rootdir = r'D:\02_post_gratuation\06_deeplearning\05_demo\10_phenocam\01_github-code\00_roi\M\val_labels'
+# def write_to_tiff(tiff_image_name, im_array, image_num):
+#     tif = TIFF.open(tiff_image_name, mode='w')
+#     for i in range(0, image_num):
+#         im = Image.fromarray(im_array[i])
+#         # 缩放成统一尺寸
+#         im = im.resize((224, 224), Image.ANTIALIAS)
+#         tif.write_image(im, compression=None)
+#     out_tiff.close()
+#     return
+for parent, dirnames, filenames in os.walk(rootdir,):  # 遍历每一张图片
+    for filename in filenames:
+        currentPath = os.path.join(parent, filename)
+        # img = Image.open(currentPath)
+        img = cv2.imread(currentPath)
+        # print(img)
+        crop_size = (224,224)
+        img_new = cv2.resize(img,crop_size)
+        # img = TIFF.open(currentPath,mode='w')
+        # im = Image.fromarray(im_array[img])
+        # img_array = np.array(img)
+        # new_im = img_array.resize((224,224), Image.ANTIALIAS)
+        # new_im = img_array.resize(224, Image.ANTIALIAS)
+    #     img = Image.fromarray(img_array.astype('uint8')).convert('RGB')
+    #     img_size = img_array.size
+
+
+        # new_im.save('new-' + filename)
+        # new_im.close()
+        # new_im.f1 = open(new_im.filename, 'r')
+        # while True:
+        #     # return_value, frame = new_im.read()
+        #     return_value, frame = new_im.read()
+        #     if (return_value == False):
+        #         print("******************************************************")
+        #         break
+        img = Image.fromarray(img_new)
+        # print(img_new)
+        # img_new.save(r"D:\02_post_gratuation\06_deeplearning\05_demo\10_phenocam\01_github-code\00_roi\M\val_labels_2"  + filename)  # 存储裁剪得到的图像
+        img.save(r"D:")  # 存储裁剪得到的图像
+        # img_new.save(r"D:\02_post_gratuation\06_deeplearning\05_demo\10_phenocam\01_github-code\00_roi\M\val_labels_2" + '\\' + filename)  # 存储裁剪得到的图像
+
