@@ -16,7 +16,7 @@ import time
 def Convert_To_Png_AndCut(dir):
     files = os.listdir(dir)
     # ResultPath1 = r"F:\02_Data\phenocamV2\04_roi_labels\06_resize\roi_png"  # 定义转换格式png后的保存路径
-    ResultPath2 = r"F:\02_Data\phenocamV2\04_roi_labels\06_resize\roi_resize\\"  # 定义裁剪后的保存路径
+    ResultPath2 = r"D:\06_scientific research\05_gee_labels\06_one_site\02_dukehw\03_Images656\\"  # 定义裁剪后的保存路径
 
     for file in files:  # 这里可以去掉for循环
         a , b = os.path.splitext(file)  # 拆分影像图的文件名称
@@ -44,7 +44,7 @@ def Convert_To_Png_AndCut(dir):
 
 if __name__ == '__main__':
     start = time.clock()
-    path = r"F:\02_Data\phenocamV2\04_roi_labels\roi"  # 遥感tiff影像所在路径
+    path = r"D:\06_scientific research\05_gee_labels\06_one_site\02_dukehw\02_dukehwImages"  # 遥感tiff影像所在路径
     # 裁剪影像图
     Convert_To_Png_AndCut(path)
 

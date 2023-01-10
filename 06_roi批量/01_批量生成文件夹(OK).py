@@ -8,8 +8,8 @@ __mtime__ = '2020/06/12'
 """
 import os , sys
 
-path1 = r'E:\phenicam\01_ROI——56\01_56site\\'  # 指定名称文件夹所在路径
-path2 = r'E:\phenicam\01_ROI——56\04_ROILabels\roi_files\\'  # 新建文件夹所在路径
+path1 = r'D:\06_scientific research\05_gee_labels\04_45site_resize\01_image\\'  # 指定名称文件夹所在路径
+path2 = r'D:\06_scientific research\05_gee_labels\04_45site_resize\各站点list_name\生成的文件夹名\\'  # 新建文件夹所在路径
 
 
 def MkDir():

@@ -7,7 +7,7 @@ __mtime__ = '2020/06/13'
 """
 
 from PIL import Image
-from libtiff import TIFF
+# from libtiff import TIFF
 import os
 import os.path
 import numpy as np
@@ -39,7 +39,7 @@ import os
 from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-rootdir =  r'F:\02_Data\phenocamV2\04_roi_labels\train'
+rootdir =  r'E:\IDM_phenocam\dukehw'
 # out_txt_path = '../out_word_all.box'
 # out_tiff_path = '../out_word_all.tif'
 
@@ -47,7 +47,7 @@ for parent , dirnames , filenames in os.walk(rootdir):  # 遍历每一张图片
     for filename in filenames:
         currentPath = os.path.join(parent , filename)
         img = Image.open(currentPath)
-        # print(img)
+        print(img)
 
         # gray_img = cv2.imread(currentPath , cv2.IMREAD_GRAYSCALE)
         # new_gray = gray_img[np.newaxis , ::]
@@ -56,7 +56,7 @@ for parent , dirnames , filenames in os.walk(rootdir):  # 遍历每一张图片
         # w , h = new_gray.size
         new_im = img.resize((224,224), Image.ANTIALIAS)
         print(new_im)
-        new_im.save(r"F:\02_Data\phenocamV2\04_roi_labels\06_resize\train_resize" + '\\' + filename)  # 存储裁剪得到的图像
+        new_im.save(r"E:\IDM_phenocam\01_resizedukehw" + '\\' + filename)  # 存储裁剪得到的图像
 
 
 
